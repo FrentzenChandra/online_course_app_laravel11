@@ -20,19 +20,30 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('teacher_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->timestamps();
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('teacher_id')->references('id')->on('teachers');
         });
 
-        Schema::create('courses_students', function (Blueprint $table) {
+        Schema::create('course_students', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('course_id')->references('id')->on('courses');
         });
+
+        Schema::create('course_keypoints', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('course_id');
+            $table->string("name");
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+
+
     }
 
     /**
@@ -41,5 +52,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('courses');
+        Schema::dropIfExists('course_students');
+        Schema::dropIfExists('course_keypoints');
     }
 };
