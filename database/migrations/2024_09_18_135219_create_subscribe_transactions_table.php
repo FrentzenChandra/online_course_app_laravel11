@@ -16,11 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string("name");
             $table->float('total_amount');
-            $table->string('is_paid');
+            $table->boolean('is_paid');
             $table->string('proof');
-            $table->date('subscription_start_date');
+            $table->date('subscription_start_date')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

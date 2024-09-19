@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('course_students', function (Blueprint $table) {
@@ -32,6 +33,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('course_keypoints', function (Blueprint $table) {
@@ -40,6 +42,19 @@ return new class extends Migration
             $table->string("name");
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
+
+        });
+
+        Schema::create('course_videos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('course_id');
+            $table->string("name");
+            $table->string("path_video");
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->timestamps();
+            $table->softDeletes();
+
         });
 
 
@@ -54,5 +69,6 @@ return new class extends Migration
         Schema::dropIfExists('courses');
         Schema::dropIfExists('course_students');
         Schema::dropIfExists('course_keypoints');
+        Schema::dropIfExists('course_videos');
     }
 };
