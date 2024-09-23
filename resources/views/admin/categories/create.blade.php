@@ -16,10 +16,9 @@
                         </div>
                     @endforeach
                 @endif
-                
-                <form method="POST" action="#" enctype="multipart/form-data">
-                    @csrf
 
+                <form method="POST" action="{{route('admin.categories.store')}}" enctype="multipart/form-data">
+                    @csrf
                     <div>
                         <x-input-label for="name" :value="__('Name')" />
                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
@@ -33,7 +32,7 @@
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-            
+
                         <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
                             Add New Category
                         </button>
